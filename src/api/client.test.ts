@@ -7,6 +7,7 @@ import { ConfigApi, FetchApi } from '@backstage/core-plugin-api';
 import {
   KubeAtlasClient,
   blastRadiusPath,
+  otelOverlayPath,
   resourcePath,
 } from './client';
 
@@ -27,6 +28,11 @@ describe('path builders', () => {
     expect(
       blastRadiusPath({ namespace: 'team a', kind: 'Deployment', name: 'a/b' }),
     ).toBe('api/v1/blast-radius/team%20a/Deployment/a%2Fb');
+  });
+
+  it('builds the OTel overlay path with an encoded namespace', () => {
+    expect(otelOverlayPath('petclinic')).toBe('api/v1/otel/overlay?namespace=petclinic');
+    expect(otelOverlayPath('team a')).toBe('api/v1/otel/overlay?namespace=team%20a');
   });
 });
 
@@ -87,6 +93,18 @@ describe('KubeAtlasClient', () => {
     expect(calls[0]).toBe(
       'https://ka.example.com/api/v1/blast-radius/petclinic/Deployment/api?max_depth=3',
     );
+  });
+
+  it('fetches the OTel overlay for a namespace', async () => {
+    const overlay = { namespace: 'petclinic', edges: [], count: 0 };
+    const { api: fetchApi, calls } = fakeFetch(overlay);
+    const client = new KubeAtlasClient({
+      configApi: fakeConfig('https://ka.example.com'),
+      fetchApi,
+    });
+
+    await expect(client.getOtelOverlay('petclinic')).resolves.toEqual(overlay);
+    expect(calls[0]).toBe('https://ka.example.com/api/v1/otel/overlay?namespace=petclinic');
   });
 
   it('throws a helpful error when the base URL is not configured', async () => {

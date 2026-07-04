@@ -20,6 +20,7 @@ const entity: Entity = {
 function mockApi(count: number): KubeAtlasApi {
   return {
     getResourceDetail: jest.fn(),
+    getOtelOverlay: jest.fn(),
     getBlastRadius: jest.fn().mockResolvedValue({
       source: { kind: 'Deployment', name: 'api', namespace: 'petclinic' },
       affected: Array.from({ length: count }, (_, i) => ({

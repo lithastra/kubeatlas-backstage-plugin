@@ -29,6 +29,7 @@ describe('DependencyGraphCard', () => {
   it('fetches the entity neighbours and renders the card', async () => {
     const api: KubeAtlasApi = {
       getBlastRadius: jest.fn(),
+      getOtelOverlay: jest.fn(),
       getResourceDetail: jest.fn().mockResolvedValue({
         resource: { kind: 'Deployment', name: 'api', namespace: 'petclinic' },
         incoming: [],
