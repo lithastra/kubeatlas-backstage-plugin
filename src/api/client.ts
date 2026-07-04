@@ -7,6 +7,7 @@ import { ConfigApi, FetchApi } from '@backstage/core-plugin-api';
 import {
   BlastRadius,
   KubeAtlasApi,
+  OtelOverlay,
   ResourceDetail,
   ResourceRef,
 } from './types';
@@ -29,6 +30,12 @@ export function resourcePath(ref: ResourceRef): string {
 // blastRadiusPath builds the blast-radius endpoint path.
 export function blastRadiusPath(ref: ResourceRef): string {
   return `api/v1/blast-radius/${encodeRef(ref)}`;
+}
+
+// otelOverlayPath builds the OTel overlay endpoint path for one
+// namespace (F-204). No leading slash — joined onto the base URL.
+export function otelOverlayPath(namespace: string): string {
+  return `api/v1/otel/overlay?namespace=${encodeURIComponent(namespace)}`;
 }
 
 // KubeAtlasClient talks to a KubeAtlas v1 API over HTTP. The base URL
@@ -74,5 +81,9 @@ export class KubeAtlasClient implements KubeAtlasApi {
   ): Promise<BlastRadius> {
     const query = opts?.maxDepth ? `?max_depth=${opts.maxDepth}` : '';
     return this.getJSON<BlastRadius>(`${blastRadiusPath(ref)}${query}`);
+  }
+
+  getOtelOverlay(namespace: string): Promise<OtelOverlay> {
+    return this.getJSON<OtelOverlay>(otelOverlayPath(namespace));
   }
 }

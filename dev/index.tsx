@@ -31,6 +31,12 @@ const mockApi: KubeAtlasApi = {
     resource: { kind: 'Deployment', name: 'orders', namespace: 'petclinic' },
     incoming: [
       { from: 'petclinic/ReplicaSet/orders-rs', to: 'petclinic/Deployment/orders', type: 'OWNS' },
+      {
+        from: 'gatekeeper/K8sRequiredLabels/require-team',
+        to: 'petclinic/Deployment/orders',
+        type: 'ENFORCES',
+        attributes: { violated: 'false' },
+      },
     ],
     outgoing: [
       { from: 'petclinic/Deployment/orders', to: 'petclinic/ConfigMap/orders-config', type: 'USES_CONFIGMAP' },
@@ -45,6 +51,24 @@ const mockApi: KubeAtlasApi = {
     ],
     count: 2,
     maxDepth: 5,
+  }),
+  getOtelOverlay: async () => ({
+    namespace: 'petclinic',
+    edges: [
+      {
+        from: 'petclinic/Deployment/frontend',
+        to: 'petclinic/Deployment/orders',
+        type: 'CALLS_AT_RUNTIME',
+        attributes: { from_service: 'frontend', to_service: 'orders', call_count: '128' },
+      },
+      {
+        from: 'petclinic/Deployment/orders',
+        to: 'petclinic/Deployment/db',
+        type: 'CALLS_AT_RUNTIME',
+        attributes: { from_service: 'orders', to_service: 'db', call_count: '64' },
+      },
+    ],
+    count: 2,
   }),
 };
 

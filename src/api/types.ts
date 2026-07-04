@@ -24,10 +24,15 @@ export interface KubeAtlasResource {
 // KubeAtlasEdge is one directed dependency. `from` and `to` are
 // KubeAtlas resource ids of the form "namespace/Kind/name"
 // (optionally "clusterId:namespace/Kind/name" in federated mode).
+// `attributes` carries edge-type-specific metadata: ENFORCES edges use
+// it for policy violation status (violated / violation_message), and
+// CALLS_AT_RUNTIME overlay edges use it for from_service / to_service /
+// call_count. Absent for most edge types.
 export interface KubeAtlasEdge {
   from: string;
   to: string;
   type: string;
+  attributes?: Record<string, string>;
 }
 
 // ResourceDetail is the body of GET /api/v1/resources/{ns}/{kind}/{name}:
@@ -47,6 +52,17 @@ export interface BlastRadius {
   maxDepth: number;
 }
 
+// OtelOverlay is the body of GET /api/v1/otel/overlay?namespace=<ns>:
+// the observed CALLS_AT_RUNTIME edges in a namespace (F-204, KubeAtlas
+// v1.5). The edges' attributes carry from_service / to_service /
+// call_count. An overlay-only surface — these never appear in the
+// declarative graph.
+export interface OtelOverlay {
+  namespace: string;
+  edges: KubeAtlasEdge[];
+  count: number;
+}
+
 // ResourceRef identifies a single KubeAtlas resource to look up.
 export interface ResourceRef {
   namespace: string;
@@ -60,6 +76,7 @@ export interface ResourceRef {
 export interface KubeAtlasApi {
   getResourceDetail(ref: ResourceRef): Promise<ResourceDetail>;
   getBlastRadius(ref: ResourceRef, opts?: { maxDepth?: number }): Promise<BlastRadius>;
+  getOtelOverlay(namespace: string): Promise<OtelOverlay>;
 }
 
 export const kubeAtlasApiRef = createApiRef<KubeAtlasApi>({
