@@ -3,7 +3,21 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
+
+// The dev app (createDevApp) mounts a guest SignInPage. Its provider first
+// tries an auth backend that the standalone plugin app doesn't run; on
+// failure it opens a confirm() dialog offering the legacy guest token.
+// Headless browsers auto-dismiss that dialog (so the sign-in throws), so
+// we register a handler to accept it, then click the guest "Enter" button —
+// which then signs in as guest and renders the requested route.
+async function openPluginPage(page: Page): Promise<void> {
+  page.on('dialog', dialog => {
+    dialog.accept().catch(() => {});
+  });
+  await page.goto('/kubeatlas');
+  await page.getByRole('button', { name: 'Enter' }).click();
+}
 
 // Full flow: load the dev app's KubeAtlas page (which mounts the Entity
 // tab against a mock API) and confirm all four cards render and the graph
@@ -11,7 +25,7 @@ import { expect, test } from '@playwright/test';
 // 2.6): dependency graph, blast radius, admission policies (F-205), and
 // runtime calls (F-204).
 test('renders the KubeAtlas Entity tab with all parity cards', async ({ page }) => {
-  await page.goto('/kubeatlas');
+  await openPluginPage(page);
 
   await expect(page.getByText('Dependency graph')).toBeVisible();
   await expect(page.getByText('Blast radius')).toBeVisible();
@@ -34,7 +48,7 @@ test('renders the KubeAtlas Entity tab with all parity cards', async ({ page }) 
 });
 
 test('expands the affected-resource list', async ({ page }) => {
-  await page.goto('/kubeatlas');
+  await openPluginPage(page);
   await page.getByRole('button', { name: /show affected resources/i }).click();
   await expect(page.getByText('Pod/orders-1')).toBeVisible();
 });
