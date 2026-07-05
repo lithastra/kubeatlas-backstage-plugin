@@ -1,0 +1,15 @@
+# Minimal config for the plugin's standalone dev app
+# (`backstage-cli package start`, driven by the Playwright e2e).
+# The dev app mounts a Backstage SignInPage/Header that reads
+# `app.title` via configApi.getString; without this file the CLI runs
+# "without config" and the page crashes on the missing value, blanking
+# the whole React tree and failing every e2e assertion.
+app:
+  title: KubeAtlas
+  baseUrl: http://localhost:3000
+
+organization:
+  name: KubeAtlas
+
+backend:
+  baseUrl: http://localhost:3000
