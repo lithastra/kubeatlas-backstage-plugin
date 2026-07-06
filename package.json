@@ -1,6 +1,6 @@
 {
   "name": "@lithastra/plugin-kubeatlas",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Backstage frontend plugin embedding KubeAtlas dependency-graph views into Entity pages",
   "license": "Apache-2.0",
   "private": false,
