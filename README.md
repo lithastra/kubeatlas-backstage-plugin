@@ -1,7 +1,6 @@
 # KubeAtlas plugin for Backstage
 
-> **Alpha.** This plugin is v0.1.x and the API surface may still change
-> before v1.0. Pin a version and read the compatibility matrix below.
+> **Stable (v1.0.x).** This plugin follows semver from v1.0.0 and tracks Headlamp-plugin feature parity. Pin a version and see the compatibility matrix below.
 
 A Backstage **frontend plugin** that embeds [KubeAtlas](https://github.com/lithastra/kubeatlas)
 dependency-graph views directly into your catalog Entity pages. It
@@ -14,7 +13,9 @@ goes away?"* without leaving Backstage.
   Entity's backing Kubernetes resource, rendered with Cytoscape.
 - **Blast radius card** — how many resources transitively depend on this
   one, graded green / amber / red, with an expandable top-10 list.
-- **KubeAtlas Entity tab** — both cards on a dedicated tab.
+- **Admission policies card** — the Gatekeeper/Kyverno admission policies that enforce this Entity's resource, read from its `ENFORCES` edges (F-205). Degrades gracefully on servers that don't report them.
+- **Runtime calls (OTel) card** — the resource's top observed runtime-call peers from the OpenTelemetry overlay (`GET /api/v1/otel/overlay`), shown when the server is Tier 2 with `otel.enabled` (F-204). Shows a clear note when the overlay is unavailable.
+- **KubeAtlas Entity tab** — all four cards on a dedicated tab.
 
 It talks directly to a KubeAtlas server's v1 API. It does **not** depend
 on `@backstage/plugin-kubernetes` or any Backstage backend plugin.
@@ -22,7 +23,9 @@ on `@backstage/plugin-kubernetes` or any Backstage backend plugin.
 ## Prerequisites
 
 - A running [KubeAtlas server](https://docs.kubeatlas.lithastra.com)
-  (>= 1.3.0) reachable from the browser.
+  (>= v1.4) reachable from the browser. The **Admission policies** card
+  needs >= v1.4; the **Runtime calls (OTel)** card needs >= v1.5 with
+  `otel.enabled`.
 - Backstage >= 1.30 (see the compatibility matrix).
 
 ## Install
