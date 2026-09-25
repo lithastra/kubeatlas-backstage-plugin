@@ -1,11 +1,14 @@
 # Compatibility matrix
 
-Each plugin release lists the version combinations it has been **tested**
-against. Other combinations may work but are not verified.
+## Historical compatibility records
+
+The ranges below were documented for earlier plugin releases. They have not
+been revalidated by the 1.0.1 packaging checks and must not be read as a new
+host/server compatibility claim for that candidate.
 
 | Plugin version | KubeAtlas server | Backstage |
 |---|---|---|
-| 1.0.x | v1.4 – v1.5 (v1 API) | 1.30 – 1.34 |
+| 1.0.0 | v1.4 – v1.5 (v1 API) | 1.30 – 1.34 |
 | 0.1.x | v1.4.x (v1 API) | 1.30 – 1.34 |
 
 Notes:
@@ -19,10 +22,22 @@ Notes:
   card (F-204, top runtime peers — needs KubeAtlas **>= v1.5** with
   `otel.enabled`). Both degrade gracefully on a server that predates or
   has not enabled the feature.
-- Backstage support tracks the two most recent minor releases at the
-  time each plugin version ships.
+- New Backstage host or KubeAtlas server combinations require explicit
+  validation; these historical ranges are not a moving support guarantee.
 
-## Maintainer toolchain (unreleased main)
+## 1.0.1 candidate validation scope
+
+The patch retains the declared React 17/18 and Router 6 peer ranges. Local
+package-consumption checks use React 18 and Router 6; React 17 has not been
+retested as part of this patch. Unit tests and the standalone development-app
+E2E suite use mock API responses. Artifact checks cover the actual npm tarball,
+its JavaScript and type entrypoints, and its package-local lazy imports.
+
+These checks do not establish a newly verified full Backstage host / live
+KubeAtlas server pairing, including KubeAtlas 1.6. The candidate remains
+unreleased until publication is explicitly completed.
+
+## Maintainer toolchain (1.0.1 candidate)
 
 Repository development, CI, and release builds use Node.js 24, npm 11,
 Backstage CLI 0.36.x, and Jest 30 with jsdom 27. TypeScript remains on 5.4,

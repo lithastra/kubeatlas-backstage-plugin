@@ -2,6 +2,9 @@
 
 > **Stable (v1.0.x).** This plugin follows semver from v1.0.0 and tracks Headlamp-plugin feature parity. Pin a version and see the compatibility matrix below.
 
+See [CHANGELOG.md](./CHANGELOG.md) for release notes and the pending 1.0.1
+packaging fix. An unreleased changelog entry is not an npm publication.
+
 A Backstage **frontend plugin** that embeds [KubeAtlas](https://github.com/lithastra/kubeatlas)
 dependency-graph views directly into your catalog Entity pages. It
 answers *"what does this service depend on, and what breaks if it
