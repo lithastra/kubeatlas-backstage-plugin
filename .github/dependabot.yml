@@ -13,5 +13,8 @@ updates:
     schedule:
       interval: weekly
     groups:
-      npm-dependencies:
+      npm-compatible:
         patterns: ['*']
+        update-types: ['minor', 'patch']
+    # Leave major updates ungrouped so React, Router, TypeScript and
+    # Backstage migrations can be reviewed and validated separately.
