@@ -84,7 +84,12 @@ combinations.
 The plugin ships a standalone dev app that mounts the Entity tab against
 a mock KubeAtlas API, so you can see the cards render without a cluster:
 
+Use Node.js 24 and npm 11 for this repository's development tooling. CI and
+release builds read the same Node major from `.nvmrc`. This is a maintainer
+toolchain requirement, not a change to the plugin's React or Router peer ranges.
+
 ```bash
+nvm install && nvm use # or install Node.js 24 with your preferred version manager
 npm ci             # honours .npmrc (legacy-peer-deps, required by MUI v4)
 npm start          # opens the dev app; visit /kubeatlas
 ```
@@ -93,6 +98,7 @@ Gates:
 
 ```bash
 npm run audit:production # fails on high/critical production dependency findings
+npm run audit:all        # also checks development tooling
 npm run lint
 npm run tsc
 npm test           # Jest unit tests with coverage

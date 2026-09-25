@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
           registry-url: 'https://registry.npmjs.org'
 
@@ -29,6 +29,9 @@ jobs:
 
       - name: Audit production dependencies
         run: npm run audit:production
+
+      - name: Audit development tooling
+        run: npm run audit:all
 
       - name: Lint
         run: npm run lint

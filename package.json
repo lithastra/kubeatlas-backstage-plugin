@@ -4,6 +4,24 @@
   "description": "Backstage frontend plugin embedding KubeAtlas dependency-graph views into Entity pages",
   "license": "Apache-2.0",
   "private": false,
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "version": ">=24 <25",
+      "onFail": "error"
+    },
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11 <12",
+      "onFail": "error"
+    }
+  },
+  "overrides": {
+    "@yarnpkg/core": "4.9.1",
+    "@module-federation/dts-plugin": {
+      "adm-zip": "0.6.1"
+    }
+  },
   "publishConfig": {
     "access": "public",
     "main": "dist/index.esm.js",
@@ -36,6 +54,7 @@
     "test": "backstage-cli package test --coverage",
     "test:e2e": "playwright test",
     "audit:production": "npm audit --package-lock-only --omit=dev --audit-level=high --ignore-scripts",
+    "audit:all": "npm audit --package-lock-only --audit-level=high --ignore-scripts",
     "tsc": "tsc",
     "clean": "backstage-cli package clean"
   },
@@ -54,14 +73,19 @@
     "react-router-dom": "^6.0.0"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.29.0",
+    "@backstage/cli": "^0.36.6",
+    "@backstage/cli-defaults": "^0.1.6",
     "@backstage/dev-utils": "^1.1.0",
     "@backstage/test-utils": "^1.7.0",
+    "@jest/environment-jsdom-abstract": "^30.0.0",
     "@playwright/test": "^1.48.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^15.0.0",
     "@types/cytoscape": "^3.21.0",
+    "@types/jest": "^30.0.0",
     "@types/react": "^18.0.0",
+    "jest": "^30.0.0",
+    "jsdom": "^27.4.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",

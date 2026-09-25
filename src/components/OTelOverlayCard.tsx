@@ -7,7 +7,7 @@ import { InfoCard, Progress } from '@backstage/core-components';
 import { useApi } from '@backstage/core-plugin-api';
 import { useEntity } from '@backstage/plugin-catalog-react';
 import { Chip, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { kubeAtlasApiRef } from '../api/types';
 import { resourceRefFromEntity } from '../lib/entityRef';
 import { idLabel, RuntimePeer, topPeers } from '../lib/overlay';

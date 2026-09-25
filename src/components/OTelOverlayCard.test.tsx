@@ -7,7 +7,6 @@ import { Entity } from '@backstage/catalog-model';
 import { EntityProvider } from '@backstage/plugin-catalog-react';
 import { renderInTestApp, TestApiProvider } from '@backstage/test-utils';
 import { screen } from '@testing-library/react';
-import React from 'react';
 import { KubeAtlasApi, KubeAtlasEdge, kubeAtlasApiRef } from '../api/types';
 import { OTelOverlayCard } from './OTelOverlayCard';
 

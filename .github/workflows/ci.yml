@@ -18,7 +18,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
       - run: npm install --no-save @commitlint/cli@19 @commitlint/config-conventional@19
       - name: Validate PR title
         if: github.event_name == 'pull_request'
@@ -65,7 +65,7 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
           cache: npm
 
       # .npmrc pins legacy-peer-deps (required by Backstage's MUI v4
@@ -94,7 +94,9 @@ jobs:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version-file: '.nvmrc'
       # Audit the committed lockfile without installing dependencies or
       # executing lifecycle scripts. Registry errors fail this gate too.
       - run: npm run audit:production
+      - name: Audit development tooling too
+        run: npm run audit:all

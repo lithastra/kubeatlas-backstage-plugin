@@ -9,7 +9,7 @@ import { useEntity } from '@backstage/plugin-catalog-react';
 import { Typography } from '@material-ui/core';
 import { Theme, useTheme } from '@material-ui/core/styles';
 import cytoscape from 'cytoscape';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { kubeAtlasApiRef, ResourceDetail } from '../api/types';
 import { resourceRefFromEntity } from '../lib/entityRef';
 import { buildStylesheet, elementsFromDetail, Palette } from '../lib/cytoscape';
