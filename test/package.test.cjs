@@ -58,6 +58,9 @@ test('npm tarball exposes compiled JavaScript, declarations, and lazy card modul
   const originalManifest = fs.readFileSync(manifestPath, 'utf8');
   const originalLock = fs.readFileSync(path.join(root, 'package-lock.json'), 'utf8');
   const sourcePackage = JSON.parse(originalManifest);
+  const sourceLock = JSON.parse(originalLock);
+  assert.equal(sourceLock.version, sourcePackage.version);
+  assert.equal(sourceLock.packages[''].version, sourcePackage.version);
   assert.ok(!fs.existsSync(backupPath), 'Restore an interrupted pack before testing');
   assert.ok(process.env.npm_execpath, 'Run this test with npm run test:package');
   // Module resolvers canonicalize symlinks; do the same for the OS temp path.
@@ -86,6 +89,8 @@ test('npm tarball exposes compiled JavaScript, declarations, and lazy card modul
     assert.ok(!fs.existsSync(backupPath), 'postpack must remove its backup');
   }
 
+  assert.equal(packed.name, sourcePackage.name);
+  assert.equal(packed.version, sourcePackage.version);
   assert.ok(!packed.files.some(file => file.path.startsWith('src/')),
     'The published entrypoint must not pull source files into the tarball');
   await tar.x({ file: path.join(temporary, packed.filename), cwd: temporary, strict: true });
@@ -94,6 +99,8 @@ test('npm tarball exposes compiled JavaScript, declarations, and lazy card modul
   fs.mkdirSync(path.dirname(packageDir), { recursive: true });
   fs.renameSync(path.join(temporary, 'package'), packageDir);
   const published = JSON.parse(fs.readFileSync(path.join(packageDir, 'package.json'), 'utf8'));
+  assert.equal(published.name, sourcePackage.name);
+  assert.equal(published.version, sourcePackage.version);
   assert.equal(published.main, 'dist/index.esm.js');
   assert.equal(published.types, 'dist/index.d.ts');
   assert.equal(published.backstage.pluginId, 'kubeatlas');
