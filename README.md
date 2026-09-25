@@ -85,13 +85,14 @@ The plugin ships a standalone dev app that mounts the Entity tab against
 a mock KubeAtlas API, so you can see the cards render without a cluster:
 
 ```bash
-npm install        # honours .npmrc (legacy-peer-deps, required by MUI v4)
+npm ci             # honours .npmrc (legacy-peer-deps, required by MUI v4)
 npm start          # opens the dev app; visit /kubeatlas
 ```
 
 Gates:
 
 ```bash
+npm run audit:production # fails on high/critical production dependency findings
 npm run lint
 npm run tsc
 npm test           # Jest unit tests with coverage

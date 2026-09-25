@@ -84,3 +84,17 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  dependency-audit:
+    name: Production dependency audit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+      # Audit the committed lockfile without installing dependencies or
+      # executing lifecycle scripts. Registry errors fail this gate too.
+      - run: npm run audit:production

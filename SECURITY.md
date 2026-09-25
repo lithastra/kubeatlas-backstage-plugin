@@ -15,5 +15,18 @@ in KubeAtlas itself should be reported through the
 
 ## Supported versions
 
-The latest 0.1.x release receives security fixes. Once 1.0 ships, this
-section will track the supported range.
+Only the latest published plugin release receives security fixes. Older
+releases are not maintained in parallel. Unreleased changes on the main
+branch are not a published security fix.
+
+## Dependency checks
+
+CI and release builds reject high or critical findings in the locked production
+dependency tree. Development-tool advisories and lower-severity findings must
+be reviewed separately; passing this gate does not mean there are no known
+advisories or prove that a vulnerable code path is unreachable.
+
+The npm package does not impose this repository's lockfile on a consuming
+Backstage application. Operators must audit and update their application's
+own dependency tree; a fixed maintainer lockfile does not repair an existing
+installation automatically.

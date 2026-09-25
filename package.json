@@ -35,12 +35,13 @@
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test --coverage",
     "test:e2e": "playwright test",
+    "audit:production": "npm audit --package-lock-only --omit=dev --audit-level=high --ignore-scripts",
     "tsc": "tsc",
     "clean": "backstage-cli package clean"
   },
   "dependencies": {
     "@backstage/catalog-model": "^1.7.0",
-    "@backstage/core-components": "^0.18.12",
+    "@backstage/core-components": "^0.18.14",
     "@backstage/core-plugin-api": "^1.10.0",
     "@backstage/plugin-catalog-react": "^1.15.0",
     "@backstage/theme": "^0.7.3",
