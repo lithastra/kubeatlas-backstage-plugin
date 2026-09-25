@@ -21,10 +21,11 @@ branch are not a published security fix.
 
 ## Dependency checks
 
-CI and release builds reject high or critical findings in the locked production
-dependency tree. Development-tool advisories and lower-severity findings must
-be reviewed separately; passing this gate does not mean there are no known
-advisories or prove that a vulnerable code path is unreachable.
+CI and release builds reject high or critical findings in both the locked
+production dependency tree and the full tree including development tooling.
+The required `Production dependency audit` check runs both audits. Lower-severity
+findings still require review; passing this gate does not mean there are no
+known advisories or prove that a vulnerable code path is unreachable.
 
 The npm package does not impose this repository's lockfile on a consuming
 Backstage application. Operators must audit and update their application's

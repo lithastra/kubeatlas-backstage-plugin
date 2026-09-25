@@ -6,7 +6,6 @@
 import { Entity } from '@backstage/catalog-model';
 import { createDevApp } from '@backstage/dev-utils';
 import { EntityProvider } from '@backstage/plugin-catalog-react';
-import React from 'react';
 
 import { KubeAtlasApi, kubeAtlasApiRef } from '../src/api/types';
 import { EntityKubeAtlasContent, kubeAtlasPlugin } from '../src/plugin';

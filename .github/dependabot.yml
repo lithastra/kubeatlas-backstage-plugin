@@ -15,6 +15,13 @@ updates:
     groups:
       npm-compatible:
         patterns: ['*']
+        # CLI pre-1.0 minor releases can include breaking toolchain changes.
+        exclude-patterns:
+          - '@backstage/cli*'
+          - '@jest/*'
+          - '@types/jest'
+          - 'jest'
+          - 'jsdom'
         update-types: ['minor', 'patch']
     # Leave major updates ungrouped so React, Router, TypeScript and
     # Backstage migrations can be reviewed and validated separately.

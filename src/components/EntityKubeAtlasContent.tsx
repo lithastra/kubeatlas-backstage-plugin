@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
 import { Grid } from '@material-ui/core';
 import { BlastRadiusCard } from './BlastRadiusCard';
 import { DependencyGraphCard } from './DependencyGraphCard';

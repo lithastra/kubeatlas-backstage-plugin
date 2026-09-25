@@ -16,7 +16,7 @@ import {
   ListItemText,
   Typography,
 } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BlastRadius, kubeAtlasApiRef } from '../api/types';
 import { resourceRefFromEntity } from '../lib/entityRef';
 import { blastSeverity, severityColor, severityLabel } from '../lib/blastSeverity';

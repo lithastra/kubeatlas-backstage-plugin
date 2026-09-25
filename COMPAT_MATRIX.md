@@ -21,3 +21,13 @@ Notes:
   has not enabled the feature.
 - Backstage support tracks the two most recent minor releases at the
   time each plugin version ships.
+
+## Maintainer toolchain (unreleased main)
+
+Repository development, CI, and release builds use Node.js 24, npm 11,
+Backstage CLI 0.36.x, and Jest 30 with jsdom 27. TypeScript remains on 5.4,
+and the React 17/18 and Router 6 public peer ranges are unchanged.
+
+This tooling update does not add a newly verified Backstage host or KubeAtlas
+server combination to the table above. The development app and Playwright
+suite use mock API responses, not a live KubeAtlas server.
