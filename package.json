@@ -33,7 +33,11 @@
     "url": "https://github.com/lithastra/kubeatlas-backstage-plugin.git"
   },
   "backstage": {
-    "role": "frontend-plugin"
+    "role": "frontend-plugin",
+    "pluginId": "kubeatlas",
+    "pluginPackages": [
+      "@lithastra/plugin-kubeatlas"
+    ]
   },
   "keywords": [
     "backstage",
@@ -50,9 +54,12 @@
   "scripts": {
     "start": "backstage-cli package start",
     "build": "backstage-cli package build",
+    "prepack": "npm run tsc && npm run build && backstage-cli package prepack",
+    "postpack": "backstage-cli package postpack",
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test --coverage",
     "test:e2e": "playwright test",
+    "test:package": "node --test test/package.test.cjs",
     "audit:production": "npm audit --package-lock-only --omit=dev --audit-level=high --ignore-scripts",
     "audit:all": "npm audit --package-lock-only --audit-level=high --ignore-scripts",
     "tsc": "tsc",
@@ -89,6 +96,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "tar": "^7.5.22",
     "typescript": "~5.4.0"
   },
   "configSchema": {

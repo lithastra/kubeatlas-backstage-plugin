@@ -85,6 +85,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Verify the npm tarball
+        run: npm run test:package
+
   dependency-audit:
     name: Production dependency audit
     runs-on: ubuntu-latest

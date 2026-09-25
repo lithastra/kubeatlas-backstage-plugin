@@ -103,6 +103,7 @@ npm run lint
 npm run tsc
 npm test           # Jest unit tests with coverage
 npm run build
+npm run test:package # packs locally and verifies the distributed entrypoints
 ```
 
 End-to-end (Playwright drives the dev app):

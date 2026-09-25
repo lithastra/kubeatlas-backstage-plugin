@@ -29,10 +29,33 @@ npm run lint
 npm run tsc
 npm test
 npm run build
+npm run test:package
 ```
 
 `npm test` runs the Jest suite with coverage. Keep coverage at or above
 the project threshold (70%).
+
+## Package verification
+
+`npm pack` builds fresh JavaScript and declarations, then uses Backstage's
+`prepack` command to switch the package entrypoints from `src` to `dist`.
+`postpack` restores the source manifest. Keep both lifecycle hooks enabled;
+`npm pack --ignore-scripts` does not produce a valid release artifact.
+
+`npm run test:package` creates a real tarball without publishing it. It unpacks
+that tarball into an isolated consumer layout and checks JavaScript and
+TypeScript entry resolution, plugin metadata, and the package-local import
+graph, including lazy card imports. It also confirms the source manifest and
+lockfile are unchanged. The test uses Node.js and declared npm dependencies,
+not shell archive tools, workstation paths, or a Kubernetes cluster. Successful
+fixtures are removed; failed fixtures are retained in the system temporary
+directory with their location printed for diagnosis.
+
+CI and the release workflow run this check before publication. This checks the
+package artifact, not rendering in a real Backstage host or live-server API
+compatibility. If an interrupted pack leaves `package.json-prepack`, inspect
+the files and run `npm run postpack` to restore the source manifest before
+continuing; do not commit the generated manifest or backup.
 
 ## Dependency updates
 
