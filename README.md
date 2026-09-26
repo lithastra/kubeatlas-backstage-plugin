@@ -1,9 +1,12 @@
 # KubeAtlas plugin for Backstage
 
-> **Stable (v1.0.x).** This plugin follows semver from v1.0.0 and tracks Headlamp-plugin feature parity. Pin a version and see the compatibility matrix below.
+> **Source-only delivery (1.0.1).** The packaging fix is available in Git,
+> but 1.0.1 has not been published to npm. Use the pinned-source instructions
+> below; the existing npm 1.0.0 package does not contain this fix.
 
-See [CHANGELOG.md](./CHANGELOG.md) for release notes and the pending 1.0.1
-packaging fix. An unreleased changelog entry is not an npm publication.
+See [CHANGELOG.md](./CHANGELOG.md) for the changes and
+[COMPAT_MATRIX.md](./COMPAT_MATRIX.md) for the validation limits. Source
+delivery and local package checks are not a new host/server compatibility claim.
 
 A Backstage **frontend plugin** that embeds [KubeAtlas](https://github.com/lithastra/kubeatlas)
 dependency-graph views directly into your catalog Entity pages. It
@@ -33,10 +36,44 @@ on `@backstage/plugin-kubernetes` or any Backstage backend plugin.
 
 ## Install
 
+### Build from the pinned source
+
+Registry installation is not the delivery path for the current 1.0.1 fix.
+Do not expect `yarn add @lithastra/plugin-kubeatlas` to retrieve it: npm
+currently provides 1.0.0, whose tarball has the entrypoint problem described
+in the changelog. A Git dependency is not a substitute for building and
+packing the plugin.
+
+Use a new checkout of the reviewed source commit, with Node.js 24 and npm 11:
+
 ```bash
-# from your Backstage app
-yarn --cwd packages/app add @lithastra/plugin-kubeatlas
+git clone https://github.com/lithastra/kubeatlas-backstage-plugin.git
+cd kubeatlas-backstage-plugin
+git checkout --detach 5776db282de5222d8e723f135e233e72724a1028
+nvm install && nvm use # or use another manager providing Node.js 24 / npm 11
+npm ci
+npm run test:package
+npm pack --pack-destination ..
 ```
+
+This creates `lithastra-plugin-kubeatlas-1.0.1.tgz` beside the checkout,
+without publishing anything. Keep lifecycle scripts enabled: `prepack`
+builds the JavaScript and declarations and prepares the distributed
+entrypoints; `postpack` restores the source manifest.
+
+Copy that archive to a `vendor/` directory in your Backstage app. From the
+app's root directory, install the local artifact:
+
+```bash
+yarn --cwd packages/app add file:../../vendor/lithastra-plugin-kubeatlas-1.0.1.tgz
+```
+
+Keep the archive available to the app's dependency installer, and run the
+app's own build and host integration tests before using it. Repository
+package checks verify entrypoints and imports, not a complete Backstage
+host or live KubeAtlas server pairing. npm publication remains a separate
+maintainer decision; do not push a version tag to distribute this source
+snapshot because the tag workflow publishes to npm.
 
 ## Configure
 

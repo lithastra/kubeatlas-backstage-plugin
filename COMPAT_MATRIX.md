@@ -34,8 +34,11 @@ E2E suite use mock API responses. Artifact checks cover the actual npm tarball,
 its JavaScript and type entrypoints, and its package-local lazy imports.
 
 These checks do not establish a newly verified full Backstage host / live
-KubeAtlas server pairing, including KubeAtlas 1.6. The candidate remains
-unreleased until publication is explicitly completed.
+KubeAtlas server pairing, including KubeAtlas 1.6. Version 1.0.1 is currently
+delivered as source only; npm publication is deferred. Follow the
+[pinned-source installation instructions](./README.md#install)
+to build a local artifact. A locally packed 1.0.1 archive is not an official
+npm release or an expansion of the historical compatibility matrix.
 
 ## Maintainer toolchain (1.0.1 candidate)
 
