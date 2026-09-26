@@ -6,6 +6,11 @@ This is a packaging and dependency-maintenance patch. It does not add plugin
 features or change the public React/Router peer ranges. This entry describes a
 release candidate, not an already published npm version.
 
+Current delivery is source-only. npm publication is deferred; use the
+[pinned-source installation instructions](./README.md#install)
+to build and consume the packaging fix locally. The existing npm 1.0.0
+package is not replaced by merging these source changes.
+
 ### Fixed
 
 - Publish compiled JavaScript and declarations from `dist`. The 1.0.0 tarball
